@@ -159,7 +159,7 @@ func PostFile(fieldName, filename, uri string) ([]byte, error) {
 }
 
 // PostFileFromReader 上传文件，从 io.Reader 中读取
-func PostFileFromReader(filedName, fileName string, reader io.Reader, uri string) ([]byte, error) {
+func PostFileFromReader(filedName, fileName, uri string, reader io.Reader) ([]byte, error) {
 	fields := []MultipartFormField{
 		{
 			IsFile:     true,

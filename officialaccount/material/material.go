@@ -176,7 +176,7 @@ func (material *Material) AddMaterialFromReader(mediaType MediaType, filename st
 
 	uri := fmt.Sprintf("%s?access_token=%s&type=%s", addMaterialURL, accessToken, mediaType)
 	var response []byte
-	response, err = util.PostFileFromReader("media", filename, reader, uri)
+	response, err = util.PostFileFromReader("media", filename, uri, reader)
 	if err != nil {
 		return
 	}
@@ -211,7 +211,7 @@ type reqVideo struct {
 }
 
 // AddVideoFromReader 永久视频素材文件上传，从 io.Reader 中读取
-func (material *Material) AddVideoFromReader(filename string, reader io.Reader, title, introduction string) (mediaID string, url string, err error) {
+func (material *Material) AddVideoFromReader(filename, title, introduction string, reader io.Reader) (mediaID string, url string, err error) {
 	var accessToken string
 	accessToken, err = material.GetAccessToken()
 	if err != nil {
@@ -272,7 +272,7 @@ func (material *Material) AddVideo(filename, title, introduction string) (mediaI
 	}
 	defer func() { _ = f.Close() }()
 
-	return material.AddVideoFromReader(filename, f, title, introduction)
+	return material.AddVideoFromReader(filename, title, introduction, f)
 }
 
 type reqDeleteMaterial struct {
